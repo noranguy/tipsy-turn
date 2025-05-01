@@ -40,7 +40,7 @@ app.post('/signup', async (req, res) => {
 });
 
 //login
-app.post('/', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username, password });
     if (!user) {

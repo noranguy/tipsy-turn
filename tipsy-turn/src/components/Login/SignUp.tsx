@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar.tsx';
 import './Login.tsx';
 import './Login.css'; 
 import axios from 'axios';
@@ -20,7 +21,7 @@ function SignUp() {
         password,
         });
         alert(response.data.message);
-        navigate('/');
+        navigate('/login');
     } catch (error) {
         console.error('Error during signup:', error);
         alert('Signup failed. Please try again.');
@@ -28,44 +29,47 @@ function SignUp() {
     };
 
   return (
-    <div className="login-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignup}>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type = "submit" className="button">Sign Up</button>
-        <button className="toggle-button" onClick={() => navigate('/')}>
-             Have an account? Login!
-         </button>      
-        </form>
+    <div>
+        <NavBar/>
+        <div className="login-container">
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSignup}>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type = "submit" className="button">Sign Up</button>
+          <button className="toggle-button" onClick={() => navigate('/login')}>
+              Have an account? Login!
+          </button>      
+          </form>
+      </div>
     </div>
   );
 }
