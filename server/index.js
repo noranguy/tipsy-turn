@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const MONGO_URI = process.env.MONGO_URI;
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -46,8 +47,25 @@ app.post('/login', async (req, res) => {
     if (!user) {
         return res.status(400).json({ message: 'Invalid credentials' });
     }
-    res.json({ message: 'Login successful' });
+    const token = jwt.sign({username:user.username}, SECRET_KEY, { expiresIn: '1h' });
+    res.json({ message: 'Login successful', token});
+});
+//authenticate token
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    if (!token) return res.sendStatus(401);
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
+//dashboard
+app.get('/dashboard', authenticateToken, (req, res) => {
+    res.json({username: req.user.username});
 });
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+

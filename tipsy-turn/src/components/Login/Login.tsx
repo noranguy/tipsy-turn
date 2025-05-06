@@ -17,6 +17,7 @@ function Login(){
                 username,
                 password,
             });
+            localStorage.setItem('token', res.data.token); // Store the token in local storage
             alert(res.data.message);
             navigate('/dashboard');
         } catch (err: any) {
