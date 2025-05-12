@@ -9,6 +9,10 @@ const NavBar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if(!token){
+      navigate("/login");
+      return;
+    }
     setIsLoggedIn(!!token);
   }, []);
 
@@ -20,7 +24,6 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-        <Link to="/">Tipsy Turn</Link>
         <ul>
           <li><Link to="/">Tipsy Turn</Link></li>
         {isLoggedIn ? (

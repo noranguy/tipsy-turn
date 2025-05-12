@@ -2,6 +2,7 @@
 import NavBar from "../NavBar/NavBar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./Dashboard.css";
 
 function Dashboard() {
     const [username, setUsername] = useState("");
@@ -24,8 +25,9 @@ function Dashboard() {
     return (
         <div>
             <NavBar />
-            <h2>Welcome to the Dashboard, {username}!</h2>
-            {/* You can add more content or components here */}
+            <div className="dashboard-container">
+                <h2>Welcome to the Dashboard, {username}!</h2>
+            </div>
         </div>
     );
 }

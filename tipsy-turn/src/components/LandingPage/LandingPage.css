@@ -5,13 +5,12 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: darkslategray;
     font-family: 'Arial', sans-serif;
 }
 
 .landing-page h1 {
     font-size: 100px;
     font-weight: bold;
-    color: white;
+    color: #030104;
 }
 
