@@ -1,12 +1,14 @@
 // Dashboard.tsx
 import NavBar from "../NavBar/NavBar";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Dashboard.css";
 
 function Dashboard() {
     const [username, setUsername] = useState("");
     const [selectedBox, setSelectedBox] = useState<[number, number]|null>(null);
+      const navigate = useNavigate();
 
     //change to be able to add more rows & columns with more techs
     const rows = 10;
@@ -18,6 +20,10 @@ function Dashboard() {
     );
     useEffect(() => {
         const token = localStorage.getItem('token');
+        if (!token){
+            navigate('/login');
+            return;
+        }
         axios.get('http://localhost:5000/dashboard',{
             headers:{
                 Authorization: `Bearer ${token}`,
@@ -49,7 +55,7 @@ function Dashboard() {
                             {Array.from({ length: cols }, (_, colIndex) => {
                                 const status = grid[rowIndex][colIndex];
                                 const color =
-                                    status === "W" || status === "W/A" || status === "Skip" ? "white" :
+                                    status === "W" || status === "W/A" || status === "Skip" || status === "white" ? "white" :
                                     status === "black" ? "black" : "#A4C3B2";
                              return(
                                 <div

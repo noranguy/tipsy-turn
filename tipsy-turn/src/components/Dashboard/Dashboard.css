@@ -31,6 +31,7 @@
     box-sizing: border-box;
     cursor: pointer;
     transition: border 0.2s;
+    align-content: center;
 }
 .grid-box.selected {
     border: 2px solid red;
