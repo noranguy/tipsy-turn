@@ -8,9 +8,8 @@ import "./Dashboard.css";
 function Dashboard() {
     const [username, setUsername] = useState("");
     const [selectedBox, setSelectedBox] = useState<[number, number]|null>(null);
-    const [prevBox, setPrevBox] = useState<[number, number]|null>(null);
 
-      const navigate = useNavigate();
+    const navigate = useNavigate();
 
     //change to be able to add more rows & columns with more techs
     const rows = 10;
@@ -40,6 +39,7 @@ function Dashboard() {
     }, []);
     const handleBoxClick = (status: string) =>{
         if(selectedBox){
+            //rows is const as 10
             const [row, col] = selectedBox;
             const prevCol = col - 1; 
             if(prevCol >= 0){
@@ -48,10 +48,19 @@ function Dashboard() {
                     return
                 }
             }
-            const newStatus = grid.map((r, i) =>
-                r.map((s,j) => (i === row && j === col ? status : s)));            
-
-            setGrid(newStatus);
+            const newGrid = grid.map((r) =>[...r]);
+            if(status === "black"){
+                const rowData = newGrid[row];
+                for(let i = row; i<rows -1; i++ ){
+                    newGrid[i] = newGrid[i+1];
+                }
+                newGrid[rows-1] = rowData;
+                newGrid[rows-1][col] = status;
+                setSelectedBox(null);
+            } else{
+                newGrid[row][col] = status;
+            }
+            setGrid(newGrid);
         }
     }
     return (
