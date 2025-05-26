@@ -8,6 +8,8 @@ import "./Dashboard.css";
 function Dashboard() {
     const [username, setUsername] = useState("");
     const [selectedBox, setSelectedBox] = useState<[number, number]|null>(null);
+    const [prevBox, setPrevBox] = useState<[number, number]|null>(null);
+
       const navigate = useNavigate();
 
     //change to be able to add more rows & columns with more techs
@@ -39,8 +41,16 @@ function Dashboard() {
     const handleBoxClick = (status: string) =>{
         if(selectedBox){
             const [row, col] = selectedBox;
+            const prevCol = col - 1; 
+            if(prevCol >= 0){
+                const prevStatus = grid[row][prevCol];
+                 if(prevStatus === ""){
+                    return
+                }
+            }
             const newStatus = grid.map((r, i) =>
-                r.map((s,j) => (i === row && j === col ? status : s)));
+                r.map((s,j) => (i === row && j === col ? status : s)));            
+
             setGrid(newStatus);
         }
     }
